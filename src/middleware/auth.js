@@ -1,9 +1,11 @@
-export default function (to, from, next) {
-    let isNotAuthenitcated = true
+export default function auth ({ to, from, next }) {
 
-    if (isNotAuthenitcated) {
-      return next({ name : 'Login'})
-    }
+  const isNotAuthenticated = true;
 
-    next()
+  if (isNotAuthenticated) {
+    return next({ name: 'Login' })
+  }
+
+  next()
+
 }

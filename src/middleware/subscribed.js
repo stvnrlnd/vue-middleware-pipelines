@@ -1,8 +1,8 @@
-export default function subscribed ({ to, from, next }) {
+export default function subscribed ({ to, from, store, next }) {
 
-    const isNotSubscribed = true;
+    const isSubscribed = store.getters['auth/user'].subscribed;
 
-    if (isNotSubscribed) {
+    if (! isSubscribed) {
         return next({ name: 'Home' })
     }
 

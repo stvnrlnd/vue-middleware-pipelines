@@ -1,8 +1,8 @@
-export default function auth ({ to, from, next }) {
+export default function auth ({ to, from, store, next }) {
 
-  const isNotAuthenticated = true;
+  const isAuthenticated = store.getters['auth/authenticated'];
 
-  if (isNotAuthenticated) {
+  if (! isAuthenticated) {
     return next({ name: 'Login' })
   }
 

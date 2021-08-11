@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import store from '@/store'
+
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Dashboard from '../views/Dashboard.vue'
@@ -9,6 +11,7 @@ import middlewarePipeline from './middlewarePipeline'
 
 import auth from '@/middleware/auth'
 import subscribed from '@/middleware/subscribed'
+import guest from '@/middleware/guest'
 
 const routes = [
   {
@@ -19,7 +22,10 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    meta: {
+      middleware: [guest]
+    }
   },
   {
     path: '/dashboard',
@@ -48,7 +54,7 @@ router.beforeEach((to, from, next) => {
 
   const middleware = to.meta.middleware
 
-  const context = {to, from, next}
+  const context = {to, from, store, next}
 
   if (! middleware) {
     return next()
@@ -58,8 +64,6 @@ router.beforeEach((to, from, next) => {
     ...context, 
     next: middlewarePipeline(context, middleware, 1)
   })
-
-  next()
 
 })
 
